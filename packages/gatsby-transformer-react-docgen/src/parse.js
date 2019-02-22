@@ -38,7 +38,12 @@ export default function parseMetadata(content, node, options) {
     components = parse(
       content,
       options.resolver || resolver.findAllComponentDefinitions,
-      defaultHandlers.concat(makeHandlers(node, options.handlers))
+      defaultHandlers.concat(makeHandlers(node, options.handlers)),
+      {
+        cwd: options.cwd,
+        filename: node.absolutePath,
+        parserOptions: options.parserOptions,
+      }
     )
   } catch (err) {
     if (err.message === ERROR_MISSING_DEFINITION) return []
